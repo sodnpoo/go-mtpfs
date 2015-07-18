@@ -138,6 +138,8 @@ func (n *classicNode) fetch() error {
 	if n.backing != "" {
 		return nil
 	}
+	//hack to prevent it caching much
+	n.fs.trimUnused(1000*1000*100, n.fs.root.Inode())
 	sz := n.Size
 	if err := n.fs.ensureFreeSpace(sz); err != nil {
 		return err
